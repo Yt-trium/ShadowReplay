@@ -3,21 +3,21 @@
 ------------------------------------------------------------
 
 ------------------------------------------------------------
--- Requêtes SQL 
+-- Requï¿½tes SQL 
 ------------------------------------------------------------
 
 ------------------------------------------------------------
--- Nombre de visionnages de vidéos par catégories de vidéos, pour les visionnages
+-- Nombre de visionnages de vidï¿½os par catï¿½gories de vidï¿½os, pour les visionnages
 -- de moins de deux semaines.
 ------------------------------------------------------------
 /*
 Liste des visionnages
 SELECT idUser, idEpisode, (CURRENT_TIMESTAMP-dateOfView) FROM History;
 
-Nombre de visionnage de vidéos pour les visionnages de moins de deux semaines
+Nombre de visionnage de vidï¿½os pour les visionnages de moins de deux semaines
 SELECT COUNT(idUser) FROM History WHERE (CURRENT_TIMESTAMP-dateOfView) < '+14 00:00:00';
 
-Catégorie d'épisode pour chaque visionnage
+Catï¿½gorie d'ï¿½pisode pour chaque visionnage
 History -> Episodes -> Emissions -> Categories
 SELECT idUser, History.idEpisode, name FROM History
 INNER JOIN Episodes ON History.idEpisode = Episodes.idEpisode
@@ -34,7 +34,7 @@ GROUP BY idCategory, name
 ;
 
 ------------------------------------------------------------
--- Par utilisateur, le nombre d'abonnements, de favoris et de vidéos visionnées.
+-- Par utilisateur, le nombre d'abonnements, de favoris et de vidï¿½os visionnï¿½es.
 ------------------------------------------------------------
 SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
 INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
@@ -49,7 +49,7 @@ INNER JOIN History ON Users.idUser = History.idUser
 GROUP BY Users.LOGIN
 ;
 
-/* En une seul requête ? THQ login_1 = 10 login_2 = 10*/
+/* En une seul requï¿½te ? THQ login_1 = 10 login_2 = 10*/
 SELECT Users.LOGIN, COUNT(Users.LOGIN) AS NB FROM Users
 INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
 INNER JOIN Favorite ON Users.idUser = Favorite.idUser
@@ -57,11 +57,31 @@ INNER JOIN History ON Users.idUser = History.idUser
 GROUP BY Users.LOGIN
 ;
 
-SELECT Users.LOGIN, COUNT(Users.LOGIN)
-FROM Subscribe
+SELECT Users.LOGIN, COUNT(NB) FROM
+(SELECT Users.LOGIN, COUNT(Users.LOGIN) AS NB FROM Users
+INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
+GROUP BY Users.LOGIN) UNION ALL
+(SELECT Users.LOGIN, COUNT(Users.LOGIN) AS NB FROM Users
+INNER JOIN Favorite ON Users.idUser = Favorite.idUser
+GROUP BY Users.LOGIN) UNION ALL
+(SELECT Users.LOGIN, COUNT(Users.LOGIN) AS NB FROM Users
+INNER JOIN History ON Users.idUser = History.idUser
+GROUP BY Users.LOGIN)
 GROUP BY Users.LOGIN
 ;
 
+SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
+INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
+GROUP BY Users.LOGIN
+UNION ALL
+SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
+INNER JOIN Favorite ON Users.idUser = Favorite.idUser
+GROUP BY Users.LOGIN
+UNION ALL
+SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
+INNER JOIN History ON Users.idUser = History.idUser
+GROUP BY Users.LOGIN
+;
 /*
 SELECT Users.LOGIN, Emissions.EMISSIONNAME FROM Users
 INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
@@ -77,9 +97,9 @@ GROUP BY Emissions.EMISSIONNAME
 */
 
 ------------------------------------------------------------
--- Pour chaque vidéo, le nombre de visionnages par des utilisateurs français,
--- le nombre de visionnage par des utilisateurs allemands, la différence entre
--- les deux, triés par valeur absolue de la différence entre les deux.
+-- Pour chaque vidï¿½o, le nombre de visionnages par des utilisateurs franï¿½ais,
+-- le nombre de visionnage par des utilisateurs allemands, la diffï¿½rence entre
+-- les deux, triï¿½s par valeur absolue de la diffï¿½rence entre les deux.
 ------------------------------------------------------------
 SELECT Episodes.title, COUNT(Episodes.idEpisode) FROM Episodes
 INNER JOIN History ON Episodes.idEpisode = History.idEpisode
@@ -96,11 +116,33 @@ GROUP BY Episodes.title, Episodes.idEpisode
 ;
 
 ------------------------------------------------------------
--- Les épisodes d'émissions qui ont au moins deux fois plus de visionnage que la
--- moyenne des visionnages des autres épisodes de l'émission.
+-- Les ï¿½pisodes d'ï¿½missions qui ont au moins deux fois plus de visionnage que la
+-- moyenne des visionnages des autres ï¿½pisodes de l'ï¿½mission.
 ------------------------------------------------------------
+/*
+Calcul de la moyenne par Ã©mission (pour le moment juste le nombre d'Ã©pisode par emissions)
+*/
+SELECT Emissions.IdEmission, COUNT(Emissions.IdEmission) AS NbEpisodes
+FROM Emissions
+INNER JOIN Episodes ON Episodes.IdEmission = Emissions.IdEmission
+GROUP BY Emissions.idEmission
+ORDER BY Emissions.IdEmission
+;
+
+SELECT  p.idEmission, (COUNT(h.idEpisode)) from Episodes v 
+FULL JOIN History h ON v.idEpisode= h.idEpisode
+FULL JOIN Emissions p ON v.idEmission= p.idEmission
+GROUP BY p.idEmission
+ORDER BY p.idEmission
+;
 
 ------------------------------------------------------------
--- Les 10 couples de vidéos apparaissant le plus souvent simultanément dans un
+-- Les 10 couples de vidï¿½os apparaissant le plus souvent simultanï¿½ment dans un
 -- historique de visionnage d'utilisateur.
 ------------------------------------------------------------
+/*
+Pour chaque vidÃ©os existante, je cherche dans les historique de tout le monde
+Pour chaque autres vidÃ©os (index supÃ©rieur) le nombre de fois ou il apparaissent
+Une fois fait, je tri le tout et limit le nombre d'affichage Ã  10
+*/
+
