@@ -35,6 +35,7 @@ CREATE TABLE Users(
 	birth       DATE  NOT NULL  ,
 	email       VARCHAR2 (320) NOT NULL  ,
 	newsletter  NUMBER (1) NOT NULL  ,
+	nationality  VARCHAR2 (255) NOT NULL  ,
 	CONSTRAINT Users_Pk PRIMARY KEY (idUser) ,
 	CONSTRAINT CHK_BOOLEAN_newsletter CHECK (newsletter IN (0,1)) ,
 	CONSTRAINT Users_Uniq UNIQUE (login)
@@ -84,7 +85,7 @@ CREATE TABLE Groups(
 	name     VARCHAR2 (64) NOT NULL  ,
 	CONSTRAINT Groups_Pk PRIMARY KEY (idGroup)
 );
-
+  
 ------------------------------------------------------------
 -- Table: Archives
 ------------------------------------------------------------
@@ -131,11 +132,20 @@ CREATE TABLE Favorite(
 ------------------------------------------------------------
 -- Table: History
 ------------------------------------------------------------
+/*
 CREATE TABLE History(
 	dateOfView  DATE  NOT NULL  ,
 	idUser      NUMBER(10,0)  NOT NULL  ,
 	idEpisode   NUMBER(10,0)  NOT NULL  ,
 	CONSTRAINT History_Pk PRIMARY KEY (idUser,idEpisode)
+);
+*/
+CREATE TABLE History(
+	idHist      NUMBER (10,0) NOT NULL  ,
+	dateOfView  DATE  NOT NULL  ,
+	idUser      NUMBER(10,0)  NOT NULL  ,
+	idEpisode   NUMBER(10,0)  NOT NULL  ,
+	CONSTRAINT History_Pk PRIMARY KEY (idHist)
 );
 
 ------------------------------------------------------------
@@ -154,13 +164,13 @@ CREATE TABLE BelongsTo(
 ALTER TABLE Emissions ADD FOREIGN KEY (idCategory) REFERENCES Categories(idCategory);
 ALTER TABLE Episodes ADD FOREIGN KEY (idEmission) REFERENCES Emissions(idEmission);
 ALTER TABLE Archives ADD FOREIGN KEY (idEmission) REFERENCES Emissions(idEmission);
+ALTER TABLE History ADD FOREIGN KEY (idUser) REFERENCES Users(idUser);
+ALTER TABLE History ADD FOREIGN KEY (idEpisode) REFERENCES Episodes(idEpisode);
 ALTER TABLE Interested ADD FOREIGN KEY (idUser) REFERENCES Users(idUser);
 ALTER TABLE Interested ADD FOREIGN KEY (idCategory) REFERENCES Categories(idCategory);
 ALTER TABLE Subscribe ADD FOREIGN KEY (idUser) REFERENCES Users(idUser);
 ALTER TABLE Subscribe ADD FOREIGN KEY (idEmission) REFERENCES Emissions(idEmission);
 ALTER TABLE Favorite ADD FOREIGN KEY (idUser) REFERENCES Users(idUser);
 ALTER TABLE Favorite ADD FOREIGN KEY (idEpisode) REFERENCES Episodes(idEpisode);
-ALTER TABLE History ADD FOREIGN KEY (idUser) REFERENCES Users(idUser);
-ALTER TABLE History ADD FOREIGN KEY (idEpisode) REFERENCES Episodes(idEpisode);
 ALTER TABLE BelongsTo ADD FOREIGN KEY (idUser) REFERENCES Users(idUser);
 ALTER TABLE BelongsTo ADD FOREIGN KEY (idGroup) REFERENCES Groups(idGroup);

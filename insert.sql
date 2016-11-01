@@ -10,11 +10,13 @@
 -- Table: Users
 ------------------------------------------------------------
 INSERT INTO Users VALUES
-(1,'Login_1','Password_1','LastName_1','FirstName_1',TO_DATE('1990/01/01', 'yyyy/mm/dd'),'email11@email.com',1);
+(1,'Login_1','Password_1','LastName_1','FirstName_1',TO_DATE('1990/01/01', 'yyyy/mm/dd'),'email11@email.com',1,'FR');
 INSERT INTO Users VALUES
-(2,'Login_2','Password_2','LastName_2','FirstName_2',TO_DATE('1990/01/01', 'yyyy/mm/dd'),'email12@email.com',1);
+(2,'Login_2','Password_2','LastName_2','FirstName_2',TO_DATE('1990/01/01', 'yyyy/mm/dd'),'email12@email.com',1,'DE');
 INSERT INTO Users VALUES
-(3,'Login_3','Password_3','LastName_3','FirstName_3',TO_DATE('1990/01/01', 'yyyy/mm/dd'),'email13@email.com',1);
+(3,'Login_3','Password_3','LastName_3','FirstName_3',TO_DATE('1990/01/01', 'yyyy/mm/dd'),'email13@email.com',1,'FR');
+INSERT INTO Users VALUES
+(4,'Login_4','Password_4','LastName_4','FirstName_4',TO_DATE('1990/01/01', 'yyyy/mm/dd'),'email14@email.com',0,'DE');
 
 ------------------------------------------------------------
 -- Table: Categories
@@ -41,6 +43,10 @@ INSERT INTO Emissions VALUES
 (4, 'Friends', 3);
 INSERT INTO Emissions VALUES
 (5, 'E-Penser', 4);
+INSERT INTO Emissions VALUES
+(6, 'Sous les jupons de l histoire', 1);
+INSERT INTO Emissions VALUES
+(7, 'Star Wars', 2);
 
 ------------------------------------------------------------
 -- TEST CONSTRAINT
@@ -69,6 +75,14 @@ INSERT INTO Episodes VALUES
 (6,'GOT EP1','GOT Episode Number 1',3600,'USA','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/30', 'yyyy/mm/dd'),2);
 INSERT INTO Episodes VALUES
 (7,'GOT EP2','GOT Episode Number 2',3600,'USA','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/30', 'yyyy/mm/dd'),2);
+INSERT INTO Episodes VALUES
+(8,'E-Penser 1','E-Penser first video',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),5);
+INSERT INTO Episodes VALUES
+(9,'E-Penser 2','E-Penser second video',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),5);
+INSERT INTO Episodes VALUES
+(10,'Napoleon','Napoleon le Conquerant',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),6);
+INSERT INTO Episodes VALUES
+(11,'Star Wars VII','Star Wars Episode VII',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),7);
 
 ------------------------------------------------------------
 -- Table: Groups
@@ -107,6 +121,10 @@ INSERT INTO Subscribe VALUES
 (2,2);
 INSERT INTO Subscribe VALUES
 (3,1);
+INSERT INTO Subscribe VALUES
+(1,1);
+INSERT INTO Subscribe VALUES
+(1,7);
 
 ------------------------------------------------------------
 -- Table: Favorite
@@ -127,6 +145,7 @@ INSERT INTO Favorite VALUES
 ------------------------------------------------------------
 -- Table: History
 ------------------------------------------------------------
+/*
 INSERT INTO History VALUES
 (CURRENT_TIMESTAMP,1,1);
 INSERT INTO History VALUES
@@ -142,6 +161,51 @@ INSERT INTO History VALUES
 (TO_DATE('2014/01/01', 'yyyy/mm/dd'),2,3);
 INSERT INTO History VALUES
 (TO_DATE('2014/01/01', 'yyyy/mm/dd'),2,4);
+
+INSERT INTO History VALUES
+(CURRENT_TIMESTAMP,1,8);
+INSERT INTO History VALUES
+(CURRENT_TIMESTAMP,2,8);
+INSERT INTO History VALUES
+(CURRENT_TIMESTAMP,3,8);
+INSERT INTO History VALUES
+(CURRENT_TIMESTAMP,1,10);
+INSERT INTO History VALUES
+(CURRENT_TIMESTAMP,1,11);
+INSERT INTO History VALUES
+(TO_DATE('2014/01/01', 'yyyy/mm/dd'),2,11);
+*/
+
+INSERT INTO History VALUES
+(0,CURRENT_TIMESTAMP,1,1);
+INSERT INTO History VALUES
+(1,CURRENT_TIMESTAMP,2,1);
+INSERT INTO History VALUES
+(2,CURRENT_TIMESTAMP,3,1);
+INSERT INTO History VALUES
+(3,CURRENT_TIMESTAMP,3,5);
+
+INSERT INTO History VALUES
+(4,TO_DATE('2014/01/01', 'yyyy/mm/dd'),2,2);
+INSERT INTO History VALUES
+(5,TO_DATE('2014/01/01', 'yyyy/mm/dd'),2,3);
+INSERT INTO History VALUES
+(6,TO_DATE('2014/01/01', 'yyyy/mm/dd'),2,4);
+
+INSERT INTO History VALUES
+(7,CURRENT_TIMESTAMP,1,8);
+INSERT INTO History VALUES
+(8,CURRENT_TIMESTAMP,2,8);
+INSERT INTO History VALUES
+(9,CURRENT_TIMESTAMP,3,8);
+INSERT INTO History VALUES
+(10,CURRENT_TIMESTAMP,1,10);
+INSERT INTO History VALUES
+(11,CURRENT_TIMESTAMP,1,11);
+INSERT INTO History VALUES
+(12,TO_DATE('2014/01/01', 'yyyy/mm/dd'),2,11);
+INSERT INTO History VALUES
+(13,TO_DATE('2014/01/01', 'yyyy/mm/dd'),4,11);
 
 ------------------------------------------------------------
 -- Table: BelongsTo
