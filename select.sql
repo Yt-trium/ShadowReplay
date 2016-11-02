@@ -36,71 +36,46 @@ GROUP BY idCategory, name
 ------------------------------------------------------------
 -- Par utilisateur, le nombre d'abonnements, de favoris et de vid�os visionn�es.
 ------------------------------------------------------------
-SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
-INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
-GROUP BY Users.LOGIN
-;
-SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
-INNER JOIN Favorite ON Users.idUser = Favorite.idUser
-GROUP BY Users.LOGIN
-;
-SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
-INNER JOIN History ON Users.idUser = History.idUser
-GROUP BY Users.LOGIN
-;
-
-/* En une seul requ�te ? THQ login_1 = 10 login_2 = 10*/
-SELECT Users.LOGIN, COUNT(Users.LOGIN) AS NB FROM Users
-INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
-INNER JOIN Favorite ON Users.idUser = Favorite.idUser
-INNER JOIN History ON Users.idUser = History.idUser
-GROUP BY Users.LOGIN
-;
-
-SELECT Users.LOGIN, COUNT(NB) FROM
-(SELECT Users.LOGIN, COUNT(Users.LOGIN) AS NB FROM Users
-INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
-GROUP BY Users.LOGIN) UNION ALL
-(SELECT Users.LOGIN, COUNT(Users.LOGIN) AS NB FROM Users
-INNER JOIN Favorite ON Users.idUser = Favorite.idUser
-GROUP BY Users.LOGIN) UNION ALL
-(SELECT Users.LOGIN, COUNT(Users.LOGIN) AS NB FROM Users
-INNER JOIN History ON Users.idUser = History.idUser
-GROUP BY Users.LOGIN)
-GROUP BY Users.LOGIN
-;
-
-SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
-INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
-GROUP BY Users.LOGIN
-UNION ALL
-SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
-INNER JOIN Favorite ON Users.idUser = Favorite.idUser
-GROUP BY Users.LOGIN
-UNION ALL
-SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
-INNER JOIN History ON Users.idUser = History.idUser
-GROUP BY Users.LOGIN
-;
 /*
-SELECT Users.LOGIN, Emissions.EMISSIONNAME FROM Users
+Total d'abonnements, de favoris puis de visionnages
+SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
 INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
-INNER JOIN Emissions ON Subscribe.idEmission = Emissions.idEmission
-GROUP BY Users.LOGIN, Emissions.EMISSIONNAME
+GROUP BY Users.LOGIN
 ;
-
-SELECT Emissions.EMISSIONNAME, COUNT(Emissions.EMISSIONNAME) FROM Users
-INNER JOIN Subscribe ON Users.idUser = Subscribe.idUser
-INNER JOIN Emissions ON Subscribe.idEmission = Emissions.idEmission
-GROUP BY Emissions.EMISSIONNAME
+SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
+INNER JOIN Favorite ON Users.idUser = Favorite.idUser
+GROUP BY Users.LOGIN
+;
+SELECT Users.LOGIN, COUNT(Users.LOGIN) FROM Users
+INNER JOIN History ON Users.idUser = History.idUser
+GROUP BY Users.LOGIN
 ;
 */
+
+WITH
+SubscribeTotal AS
+(SELECT Users.idUser,count(Subscribe.idEmission) AS ST FROM Users
+FULL JOIN Subscribe ON Users.idUser=Subscribe.idUser
+GROUP BY Users.idUser),
+FavoriteTotal AS
+(SELECT Users.idUser,count(Favorite.idEpisode) AS FT FROM Users
+FULL JOIN Favorite ON Users.idUser=Favorite.idUser
+GROUP BY Users.idUser),
+HistoryTotal AS
+(SELECT Users.idUser,count(History.idEpisode) AS HT FROM Users
+FULL JOIN History ON Users.idUser=History.idUser
+GROUP BY Users.idUser)
+SELECT login, ST, HT, FT, ST+HT+FT FROM Users
+NATURAL JOIN SubscribeTotal
+NATURAL JOIN FavoriteTotal
+NATURAL JOIN HistoryTotal;
 
 ------------------------------------------------------------
 -- Pour chaque vid�o, le nombre de visionnages par des utilisateurs fran�ais,
 -- le nombre de visionnage par des utilisateurs allemands, la diff�rence entre
 -- les deux, tri�s par valeur absolue de la diff�rence entre les deux.
 ------------------------------------------------------------
+
 SELECT Episodes.title, COUNT(Episodes.idEpisode) FROM Episodes
 INNER JOIN History ON Episodes.idEpisode = History.idEpisode
 INNER JOIN Users ON Users.idUser = History.idUser
@@ -114,6 +89,27 @@ INNER JOIN Users ON Users.idUser = History.idUser
 WHERE Users.NATIONALITY = 'DE'
 GROUP BY Episodes.title, Episodes.idEpisode
 ;
+
+WITH
+TotalAll AS
+(SELECT Episodes.title, 0 FROM Episodes),
+TotalFR AS
+(SELECT Episodes.title, COUNT(Episodes.title) AS TFR FROM Episodes
+FULL JOIN History ON Episodes.idEpisode = History.idEpisode
+FULL JOIN Users ON Users.idUser = History.idUser
+WHERE Users.NATIONALITY = 'FR'
+GROUP BY Episodes.title),
+TotalDE AS
+(SELECT Episodes.title, COUNT(Episodes.title) AS TDE FROM Episodes
+FULL JOIN History ON Episodes.idEpisode = History.idEpisode
+FULL JOIN Users ON Users.idUser = History.idUser
+WHERE Users.NATIONALITY = 'DE'
+GROUP BY Episodes.title)
+SELECT title, TFR, TDE FROM Episodes
+NATURAL JOIN TotalALL
+NATURAL JOIN TotalFR
+NATURAL JOIN TotalDE;
+
 
 ------------------------------------------------------------
 -- Les �pisodes d'�missions qui ont au moins deux fois plus de visionnage que la

@@ -83,6 +83,8 @@ INSERT INTO Episodes VALUES
 (10,'Napoleon','Napoleon le Conquerant',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),6);
 INSERT INTO Episodes VALUES
 (11,'Star Wars VII','Star Wars Episode VII',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),7);
+INSERT INTO Episodes VALUES
+(12,'Star Wars IV','Star Wars Episode IV',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2014/11/01', 'yyyy/mm/dd'),7);
 
 ------------------------------------------------------------
 -- Table: Groups

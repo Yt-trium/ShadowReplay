@@ -52,6 +52,25 @@ CREATE OR REPLACE FUNCTION F_Test_Augmentation
 -- ajoutant la liste de toutes les sorties de la semaine.
 ------------------------------------------------------------
 
+CREATE OR REPLACE FUNCTION newsletter
+RETURN VARCHAR2 IS
+   ret VARCHAR2(2048);
+BEGIN
+   SELECT title INTO ret
+   FROM Episodes
+   WHERE (CURRENT_TIMESTAMP-lastBroadcasting) < '+7 00:00:00';
+   RETURN ret;
+END;
+/
+
+DECLARE
+   s VARCHAR2(2048);
+BEGIN
+   dbms_output.put_line('Newsleter :');
+   dbms_output.put(newsletter());
+END;
+/
+
 ------------------------------------------------------------
 -- Définir une procédure qui génère ​N épisodes, un par semaine, entre une
 -- date de début et une date de fin indiquées en paramètre de la procédure.
@@ -59,7 +78,11 @@ CREATE OR REPLACE FUNCTION F_Test_Augmentation
 -- Le descriptif de l’épisode sera « à venir »
 ------------------------------------------------------------
 
+
+
 ------------------------------------------------------------
 -- Générer la liste des vidéos populaires, conseillées pour un utilisateur,
 -- c’est à dire fonction des catégories de vidéos qu’il suit.
 ------------------------------------------------------------
+
+
