@@ -178,15 +178,68 @@ END;
 -- c’est à dire fonction des catégories de vidéos qu’il suit.
 ------------------------------------------------------------
 /*
-2 Vidéos / Catégories maximum
-Les vidéos doivent êtres sortie les 2 dernières semaines
+1. Récupéré les catégories interessant l'utilisateur
+SELECT Categories.idCategory FROM Users
+INNER JOIN Interested ON Interested.idUser = Users.idUser
+INNER JOIN Categories ON Categories.idCategory = Interested.idCategory
+WHERE Users.idUser = 1;
+2. Récupéré les n vidéos les plus vu de la categorie (sortie il y a moins de 14 jours)
+SELECT title FROM
+(
+SELECT title, COUNT(title) FROM Episodes
+INNER JOIN History ON Episodes.idEpisode = History.idEpisode
+WHERE idEmission = 1
+GROUP BY title
+ORDER BY COUNT(title) DESC
+)
+WHERE ROWNUM <= 2;
 */
-CREATE OR REPLACE FUNCTION suggestion_generator(u_id NUMBER)
+
+CREATE OR REPLACE FUNCTION suggestion_generator(u_id NUMBER, n_episode NUMBER)
 RETURN VARCHAR2
 IS
 	tmp_title VARCHAR2(256);
   return_text VARCHAR2(4096):= '';
+  idCategory_var  NUMBER(10,0);
+  title_var VARCHAR(256);
+  
+  CURSOR cursor_category IS
+  SELECT Categories.idCategory FROM Users
+  INNER JOIN Interested ON Interested.idUser = Users.idUser
+  INNER JOIN Categories ON Categories.idCategory = Interested.idCategory
+  WHERE Users.idUser = u_id;
+  
+  CURSOR cursor_title IS
+  SELECT title FROM
+  (
+  SELECT title, COUNT(title) FROM Episodes
+  INNER JOIN History ON Episodes.idEpisode = History.idEpisode
+  INNER JOIN Emissions ON Emissions.idEmission = Episodes.idEmission
+  WHERE idCategory = idCategory_var
+  GROUP BY title
+  ORDER BY COUNT(title) DESC
+  )
+  WHERE ROWNUM <= n_episode;
+  
 BEGIN
+	OPEN cursor_category;
+  LOOP
+		FETCH cursor_category INTO idCategory_var;
+		EXIT WHEN cursor_category%NOTFOUND;
+		return_text:=CONCAT(return_text,'Categorie N°');
+		return_text:=CONCAT(return_text,idCategory_var);
+		return_text:=CONCAT(return_text,CHR(10));
+    
+    OPEN cursor_title;
+    LOOP
+      FETCH cursor_title INTO title_var;
+      EXIT WHEN cursor_title%NOTFOUND;
+      return_text:=CONCAT(return_text,title_var);
+      return_text:=CONCAT(return_text,CHR(10));
+    END LOOP;
+    CLOSE cursor_title;
+    
+	END LOOP;
 	RETURN return_text;
 END;
 /
@@ -194,8 +247,8 @@ END;
 -- TEST
 BEGIN
    dbms_output.put_line('Liste des vidéos populaires, conseillées pour utilisateur 1 :');
-   dbms_output.put_line(suggestion_generator(1));
+   dbms_output.put_line(suggestion_generator(1,2));
    dbms_output.put_line('Liste des vidéos populaires, conseillées pour utilisateur 2 :');
-   dbms_output.put_line(suggestion_generator(2));
+   dbms_output.put_line(suggestion_generator(2,2));
 END;
 /
