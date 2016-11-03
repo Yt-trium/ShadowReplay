@@ -62,30 +62,40 @@ INSERT INTO Emissions VALUES
 -- Table: Episodes
 ------------------------------------------------------------
 INSERT INTO Episodes VALUES
-(1,'Episode 1','Episode Number 1',3600,'USA','4:3',1,TO_DATE('2015/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/27', 'yyyy/mm/dd'),1);
+(1,'Episode 1','Episode Number 1',3600,'USA','4:3',1,TO_DATE('2015/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/27', 'yyyy/mm/dd'),1,1);
 INSERT INTO Episodes VALUES
-(2,'Episode 2','Episode Number 2',3600,'USA','4:3',1,TO_DATE('2015/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/28', 'yyyy/mm/dd'),1);
+(2,'Episode 2','Episode Number 2',3600,'USA','4:3',1,TO_DATE('2015/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/28', 'yyyy/mm/dd'),2,1);
 INSERT INTO Episodes VALUES
-(3,'Episode 3','Episode Number 3',3600,'USA','4:3',1,TO_DATE('2015/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/29', 'yyyy/mm/dd'),1);
+(3,'Episode 3','Episode Number 3',3600,'USA','4:3',1,TO_DATE('2015/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/29', 'yyyy/mm/dd'),3,1);
 INSERT INTO Episodes VALUES
-(4,'Episode 4','Episode Number 4',3600,'USA','4:3',1,TO_DATE('2015/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/30', 'yyyy/mm/dd'),1);
+(4,'Episode 4','Episode Number 4',3600,'USA','4:3',1,TO_DATE('2015/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/30', 'yyyy/mm/dd'),4,1);
 INSERT INTO Episodes VALUES
-(5,'Episode 5','Episode Number 5',3600,'USA','4:3',1,TO_DATE('2015/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/31', 'yyyy/mm/dd'),1);
+(5,'Episode 5','Episode Number 5',3600,'USA','4:3',1,TO_DATE('2015/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/31', 'yyyy/mm/dd'),5,1);
 INSERT INTO Episodes VALUES
-(6,'GOT EP1','GOT Episode Number 1',3600,'USA','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/30', 'yyyy/mm/dd'),2);
+(6,'GOT EP1','GOT Episode Number 1',3600,'USA','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/30', 'yyyy/mm/dd'),1,2);
 INSERT INTO Episodes VALUES
-(7,'GOT EP2','GOT Episode Number 2',3600,'USA','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/30', 'yyyy/mm/dd'),2);
+(7,'GOT EP2','GOT Episode Number 2',3600,'USA','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/10/30', 'yyyy/mm/dd'),2,2);
 INSERT INTO Episodes VALUES
-(8,'E-Penser 1','E-Penser first video',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),5);
+(8,'E-Penser 1','E-Penser first video',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),1,5);
 INSERT INTO Episodes VALUES
-(9,'E-Penser 2','E-Penser second video',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),5);
+(9,'E-Penser 2','E-Penser second video',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),2,5);
 INSERT INTO Episodes VALUES
-(10,'Napoleon','Napoleon le Conquerant',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),6);
+(10,'Napoleon','Napoleon le Conquerant',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),1,6);
 INSERT INTO Episodes VALUES
-(11,'Star Wars VII','Star Wars Episode VII',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),7);
+(11,'Star Wars VII','Star Wars Episode VII',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/01', 'yyyy/mm/dd'),7,7);
 INSERT INTO Episodes VALUES
-(12,'Star Wars IV','Star Wars Episode IV',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2014/11/01', 'yyyy/mm/dd'),7);
-
+(12,'Star Wars IV','Star Wars Episode IV',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2014/11/01', 'yyyy/mm/dd'),4,7);
+-- Sortie de la semaine
+INSERT INTO Episodes VALUES
+(13,'GOT EP3','GOT Episode Number 3',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/06', 'yyyy/mm/dd'),3,2);
+INSERT INTO Episodes VALUES
+(14,'GOT EP4','GOT Episode Number 4',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/06', 'yyyy/mm/dd'),4,2);
+INSERT INTO Episodes VALUES
+(15,'GOT EP5','GOT Episode Number 5',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/06', 'yyyy/mm/dd'),5,2);
+INSERT INTO Episodes VALUES
+(16,'GOT EP6','GOT Episode Number 6',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/06', 'yyyy/mm/dd'),6,2);
+INSERT INTO Episodes VALUES
+(17,'GOT EP7','GOT Episode Number 7',1800,'FR','16:9',1,TO_DATE('2014/01/01', 'yyyy/mm/dd'),TO_DATE('2016/11/25', 'yyyy/mm/dd'),7,2);
 ------------------------------------------------------------
 -- Table: Groups
 ------------------------------------------------------------
@@ -98,7 +108,7 @@ INSERT INTO Groups VALUES
 -- Table: Archives
 ------------------------------------------------------------
 INSERT INTO Archives VALUES
-(1,'Friends Episode 1','Friends Episode Number 1',3600,'USA','4:3',1,TO_DATE('2012/01/01', 'yyyy/mm/dd'),TO_DATE('2014/10/31', 'yyyy/mm/dd'),4);
+(1,'Friends Episode 1','Friends Episode Number 1',3600,'USA','4:3',1,TO_DATE('2012/01/01', 'yyyy/mm/dd'),TO_DATE('2014/10/31', 'yyyy/mm/dd'),1,4);
 
 ------------------------------------------------------------
 -- Table: Interested

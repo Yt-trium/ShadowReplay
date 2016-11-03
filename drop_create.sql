@@ -73,6 +73,7 @@ CREATE TABLE Episodes(
 	multiLanguage      NUMBER(10,0)  NOT NULL  ,
 	firstBroadcasting  DATE  NOT NULL  ,
 	lastBroadcasting   DATE  NOT NULL  ,
+	nb                 NUMBER(10,0)  NOT NULL  ,
 	idEmission         NUMBER(10,0)  NOT NULL  ,
 	CONSTRAINT Episodes_Pk PRIMARY KEY (idEpisode)
 );
@@ -99,6 +100,7 @@ CREATE TABLE Archives(
 	multiLanguage      NUMBER (10,0) NOT NULL  ,
 	firstBroadcasting  DATE  NOT NULL  ,
 	lastBroadcasting   DATE  NOT NULL  ,
+	nb                 NUMBER(10,0)  NOT NULL  ,
 	idEmission         NUMBER(10,0)  NOT NULL  ,
 	CONSTRAINT Archives_Pk PRIMARY KEY (idArchive)
 );
