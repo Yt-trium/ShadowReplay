@@ -14,8 +14,6 @@ CREATE OR REPLACE FUNCTION episode_to_json(e_id NUMBER)
 RETURN VARCHAR2
 IS
   return_text VARCHAR2(32000):= '{' || CHR(10);
-  CURSOR cursor_episode_informations IS
-  SELECT * FROM Episodes WHERE idEpisode = e_id;
   
   idEpisode_var NUMBER(10,0);
 	title_var VARCHAR2 (256);
@@ -30,13 +28,12 @@ IS
 	idEmission_var NUMBER(10,0);
   
 BEGIN
-  OPEN cursor_episode_informations;  
-  
-	FETCH cursor_episode_informations INTO
+  SELECT * INTO
   idEpisode_var, title_var, description_var, duration_var,
   country_var, imageFormat_var, multiLanguage_var, firstBroadcasting_var,
-  lastBroadcasting_var, nb_var, idEmission_var;
-   
+  lastBroadcasting_var, nb_var, idEmission_var
+  FROM Episodes WHERE idEpisode = e_id;
+  
 	return_text:=CONCAT(return_text,'"idEpisode": ');
 	return_text:=CONCAT(return_text,idEpisode_var);
 	return_text:=CONCAT(return_text,','||CHR(10));
@@ -81,6 +78,7 @@ END;
 -- TEST
 BEGIN
    dbms_output.put_line(episode_to_json(1));
+   dbms_output.put_line(episode_to_json(2));
 END;
 /
 ------------------------------------------------------------
@@ -132,9 +130,49 @@ END;
 -- L’incrémentation du numéro d’épisode partira du dernier épisode dans la base.
 -- Le descriptif de l’épisode sera « à venir »
 ------------------------------------------------------------
+/*
+SELECT * FROM (SELECT nb FROM Episodes WHERE idEmission = 1 ORDER BY nb DESC) WHERE ROWNUM = 1;
+SELECT * FROM (SELECT idEpisode FROM Episodes ORDER BY idEpisode DESC) WHERE ROWNUM = 1;
+*/
 
+CREATE OR REPLACE PROCEDURE episodes_generator(e_id NUMBER, beg_date DATE, end_date DATE,
+title_var VARCHAR2, duration_var NUMBER, country_var VARCHAR2, imageFormat_var VARCHAR2, multiLanguage_var NUMBER)
+IS
+  nb_var NUMBER(10,0);
+  increment_pk NUMBER(10,0);
+  tmp_date DATE;
+  /* episodeName VARCHAR(255); */
+BEGIN
+  tmp_date := beg_date;
+  
+  SELECT * INTO nb_var
+  FROM (SELECT nb FROM Episodes WHERE idEmission = e_id ORDER BY nb DESC) WHERE ROWNUM = 1;
+  
+  SELECT * INTO increment_pk
+  FROM (SELECT idEpisode FROM Episodes ORDER BY idEpisode DESC) WHERE ROWNUM = 1;
+  /*
+  SELECT emissionName INTO episodeName
+  FROM Emissions WHERE idEmission = e_id;
+  */
+  LOOP
+		EXIT WHEN tmp_date > end_date;
+    tmp_date := tmp_date + 7;
+    nb_var := nb_var + 1;
+    increment_pk := increment_pk + 1;
+    
+    INSERT INTO Episodes VALUES
+    (increment_pk,title_var,'à venir',
+    duration_var,country_var,imageFormat_var,multiLanguage_var,
+    tmp_date,tmp_date,nb_var,e_id);
+  END LOOP;
+END;
+/
 
-
+-- TEST
+BEGIN
+   episodes_generator(1,TO_DATE('2016/12/05', 'yyyy/mm/dd'),TO_DATE('2016/12/19', 'yyyy/mm/dd'),'South Park !',1200,'US','4:3',1);
+END;
+/
 ------------------------------------------------------------
 -- Générer la liste des vidéos populaires, conseillées pour un utilisateur,
 -- c’est à dire fonction des catégories de vidéos qu’il suit.
