@@ -15,13 +15,20 @@
 .sidenav
 {
   padding-top: 20px;
-  background-color: #f1f1f1;
+  /*background-color: #f1f1f1;*/
+  background-color: #000000;
   height: 100%;
 }
 
 .vidcol
 {
   padding-top: 20px;
+}
+
+/* Set minimum height */
+.row.pagination_row
+{
+  height: 100px;
 }
 
 /* footer : color */

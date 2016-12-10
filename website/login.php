@@ -37,7 +37,7 @@
     <!-- navbar login -->
     <ul class="nav navbar-nav navbar-right">
       <li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-      <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+      <li><a href="signin.php"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
     </ul>
   </div>
 </nav>
@@ -46,35 +46,21 @@
   <!-- main page -->
   <div class="row main">
     <div class="col-sm-1 sidenav"></div>
-    <div class="col-sm-3 vidcol">
-      <img class="img-responsive center-block center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 1
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 2
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 3
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 4
-    </div>
-    <div class="col-sm-3 vidcol">
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 1
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 2
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 3
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 4
-    </div>
-    <div class="col-sm-3 vidcol">
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 1
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 2
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 3
-      <img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">
-      Text 4
+    <div class="col-sm-9 vidcol">
+    <form>
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur:</label>
+        <input type="text" class="form-control" id="username">
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe:</label>
+        <input type="password" class="form-control" id="password">
+      </div>
+      <div class="checkbox">
+        <label><input type="checkbox"> Se rappeler de moi</label>
+      </div>
+      <button type="submit" class="btn btn-default">Connexion</button>
+    </form>
     </div>
     <div class="col-sm-2 sidenav">
       <div class="well">
@@ -94,22 +80,6 @@
       </div>
     </div>
   </div>
-
-  <!-- pagination row -->
-  <div class="row pagination_row">
-    <div class="col-sm-1 sidenav"></div>
-    <div class="col-sm-9 pagination_col">
-      <ul class="pagination">
-        <li class="disabled"><a href=""><</a></li>
-        <li class="active"><a href="index.php">1</a></li>
-        <li><a href="index.php?page=2">2</a></li>
-        <li><a href="index.php?page=3">3</a></li>
-        <li><a href="index.php?page=2">></a></li>
-      </ul>
-    </div>
-    <div class="col-sm-2 sidenav"></div>
-  </div>
-
 </div>
 
 <!-- footer -->
