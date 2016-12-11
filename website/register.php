@@ -44,29 +44,135 @@
 
 <div class="container-fluid text-center">
   <!-- main page -->
+  <?php
+    // Include database connection.
+    include("func/connection.php");
+    include("func/miscellaneous.php");
+
+    // If data are posted, try to register someone
+    // Init all vars to ""
+    $username = $password = $email = $lastname = $firstname = "";
+    $birthday = $nationality = $newsletter = "";
+    $return = "";
+    $error_str = "<h1  style='color:#ff0000'>- Erreur lors de l'inscription du nouvel utilisateur -</h1></br>";
+
+    if($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+      $username = $_POST['username'];
+      $password = $_POST['password'];
+      $email    = $_POST['email'];
+      $lastname = $_POST['lastname'];
+      $firstname= $_POST['firstname'];
+      $birthday = $_POST['birthday'];
+      $nationality=  $_POST['nationality'];
+      $newsletter =  $_POST['newsletter'];
+
+      /*
+      Used for test : show all
+      echo $username . " [] " . $password  . " [] " . $email . " [] " . $lastname
+      . " [] " . $firstname  . " [] " . $birthday . " [] " . $nationality
+      . " [] " .  $newsletter;
+      */
+
+      if(strlen($username) > 64 || $username == "")
+      {
+        $return = $error_str;
+      }
+      else if($password == "")
+      {
+        $return = $error_str;
+      }
+      else if(strlen($email) > 320 || $email == "")
+      {
+        $return = $error_str;
+      }
+      else if(strlen($lastname) > 64 || $lastname == "")
+      {
+        $return = $error_str;
+      }
+      else if(strlen($firstname) > 64 || $firstname == "")
+      {
+        $return = $error_str;
+      }
+      else if(!validateDate($birthday, 'Y-m-d'))
+      {
+        $return = $error_str;
+      }
+      else if(strlen($nationality) > 25 || $nationality == "Nationalité")
+      {
+        $return = $error_str;
+      }
+      else
+      {
+        if($newsletter == 'on')
+        {
+          $newsletter = 1;
+        }
+        else
+        {
+          $newsletter = 0;
+        }
+
+        $q = $conn->prepare("SELECT max(idUser) FROM Users");
+        $r = false;
+        $r = $q->execute();
+
+        $id = $q->fetch();
+        $id = $id[0]+1;
+
+        $q = $conn->prepare("INSERT INTO Users(idUser, login, password, lastname, firstname, birth, email, newsletter, nationality) VALUES(:id, :username, :password, :lastname, :firstname, :birthday, :email, :newsletter, :nationality)");
+
+        $q->bindParam(':id',$id);
+        $q->bindParam(':username',$username);
+        $q->bindParam(':password',$password);
+        $q->bindParam(':lastname',$lastname);
+        $q->bindParam(':firstname',$firstname);
+        $q->bindParam(':birthday',$birthday);
+        $q->bindParam(':email',$email);
+        $q->bindParam(':newsletter',$newsletter);
+        $q->bindParam(':nationality',$nationality);
+
+        $r = false;
+        $r = $q->execute();
+
+        if($r)
+        {
+          $return = "<h1  style='color:#009933'>- Nouvel utilisateur inscrit -</h1></br>";
+        }
+        else
+        {
+          $return = $error_str;
+        }
+      }
+
+    }
+  ?>
 
   <div class="row main">
     <div class="col-sm-1 sidenav"></div>
     <div class="col-sm-9 vidcol">
-      <form class="form-horizontal">
-          <input type="text" class="form-control" id="username"
+      <?php
+        echo $return;
+      ?>
+      <form class="form-horizontal" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+          <input type="text" class="form-control" id="username" name="username"
           placeholder="Nom d'utilisateur"></br>
-          <input type="password" class="form-control" id="password"
+          <input type="password" class="form-control" id="password" name="password"
           placeholder="Mot de passe"></br>
 
-          <input type="email" class="form-control" id="email"
+          <input type="email" class="form-control" id="email" name="email"
           placeholder="Email"></br>
 
-          <input type="text" class="form-control" id="lastname"
+          <input type="text" class="form-control" id="lastname" name="lastname"
           placeholder="Nom"></br>
-          <input type="text" class="form-control" id="firstname"
+          <input type="text" class="form-control" id="firstname" name="firstname"
           placeholder="Prénom"></br>
 
           <label for="birthday" align="left">Date de naissance:</label>
-          <input type="date" class="form-control" id="birthday"
+          <input type="date" class="form-control" id="birthday" name="birthday"
           placeholder="Date de naissance"></br>
 
-          <select class="form-control" id="nationality">
+          <select class="form-control" id="nationality" name="nationality">
             <option value="">Nationalité</option>
             <option value="afghan">Afghan</option>
             <option value="albanian">Albanian</option>
@@ -262,10 +368,10 @@
             <option value="zimbabwean">Zimbabwean</option>
           </select></br>
 
-          <label><input type="checkbox" id="newsletter" checked>
+          <label><input type="checkbox" id="newsletter" name="newsletter" checked>
           Inscription à la newsletter</label></br></br>
 
-          <button type="submit" class="btn btn-default">Inscription</button>
+          <button type="submit" class="btn btn-default" id="submit">Inscription</button>
       </form>
 
     </div>
