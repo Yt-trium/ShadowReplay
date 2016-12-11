@@ -28,9 +28,10 @@
         <span class="glyphicon glyphicon-list"></span> Catégories
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="index.php?categorie=1">Categorie 1</a></li>
-          <li><a href="index.php?categorie=2">Categorie 2</a></li>
-          <li><a href="index.php?categorie=3">Categorie 3</a></li>
+        <?php
+          include("func/miscellaneous.php");
+          showCategorieList();
+        ?>
         </ul>
       </li>
     </ul>
@@ -47,7 +48,6 @@
   <?php
     // Include database connection.
     include("func/connection.php");
-    include("func/miscellaneous.php");
 
     // If data are posted, try to register someone
     // Init all vars to ""
