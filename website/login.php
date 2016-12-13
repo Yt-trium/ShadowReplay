@@ -22,7 +22,7 @@
     </div>
     <!-- navbar menu -->
     <ul class="nav navbar-nav">4
-      <li class="active"><a href="index.php"><span class="glyphicon glyphicon-home"></span> Accueil</a></li>
+      <li><a href="index.php"><span class="glyphicon glyphicon-home"></span> Accueil</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <span class="glyphicon glyphicon-list"></span> Catégories
@@ -38,7 +38,7 @@
     <!-- navbar login -->
     <ul class="nav navbar-nav navbar-right">
       <li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-      <li><a href="signin.php"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+      <li class="active"><a href="signin.php"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
     </ul>
   </div>
 </nav>

@@ -1,3 +1,4 @@
 website/img
+website/vid
 website/.*
 website/func/connection.php

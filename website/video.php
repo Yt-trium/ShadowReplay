@@ -43,87 +43,33 @@
   </div>
 </nav>
 
-<?php
-  // Gestion du numéro de page
-  $page = 0;
-
-  if($_SERVER["REQUEST_METHOD"] == "GET")
-  {
-    $page = $_GET['page'];
-  }
-
-  if($page == "")
-    $page = 0;
-?>
-
-<?php
-  include("func/connection.php");
-  $q = $conn->prepare("SELECT idEpisode, title FROM Episodes WHERE idEpisode > ". 15*$page." LIMIT 15");
-  $r = false;
-  $r = $q->execute();
-
-  $dataToShow = [];
-  $i = 0;
-
-  while ($row = $q->fetch())
-  {
-    $dataToShow[] = '<a href="video.php?id=' . $row[0] . '"><img class="img-responsive center-block center-block" src="img/vignette/' . $row[0] . '.png" alt="video 1">' . '<p>' . $row[1] . '</p></a>';
-    $i++;
-  }
-
-  while($i < 15)
-  {
-    $dataToShow[] = '<img class="img-responsive center-block" src="img/vignette/video_1.png" alt="video 1">' . 'NO VIDEO';
-    $i++;
-  }
-?>
-
 <div class="container-fluid text-center">
   <!-- main page -->
   <div class="row main">
     <div class="col-sm-1 sidenav"></div>
-    <div class="col-sm-3 vidcol">
+    <div class="col-sm-9 vidcol">
       <?php
-        echo $dataToShow[0];
-        echo $dataToShow[3];
-        echo $dataToShow[6];
-        echo $dataToShow[9];
-        echo $dataToShow[12];
+        // Include database connection.
+        include("func/connection.php");
+
+        $id = "";
+
+        if($_SERVER["REQUEST_METHOD"] == "GET")
+        {
+          $id = $_GET['id'];
+        }
       ?>
-    </div>
-    <div class="col-sm-3 vidcol">
-      <?php
-        echo $dataToShow[1];
-        echo $dataToShow[4];
-        echo $dataToShow[7];
-        echo $dataToShow[10];
-        echo $dataToShow[13];
-      ?>
-    </div>
-    <div class="col-sm-3 vidcol">
-      <?php
-        echo $dataToShow[2];
-        echo $dataToShow[5];
-        echo $dataToShow[8];
-        echo $dataToShow[11];
-        echo $dataToShow[14];
-      ?>
+      <video width="100%" height="100%" controls>
+       <source src="vid/<?php echo $id ?>.mp4" type="video/mp4">
+     Your browser does not support the video tag.
+     </video>
     </div>
     <div class="col-sm-2 sidenav">
       <div class="well">
-        <p>ADS 1</p>
+        <img class="img-responsive center-block" src="img/ads/halter.png" alt="ads h">
       </div>
       <div class="well">
-        <p>ADS 2</p>
-      </div>
-      <div class="well">
-        <p>ADS 3</p>
-      </div>
-      <div class="well">
-        <p>ADS 4</p>
-      </div>
-      <div class="well">
-        <p>ADS 5</p>
+        <img class="img-responsive center-block" src="img/ads/halter.png" alt="ads h">
       </div>
     </div>
   </div>
@@ -133,14 +79,11 @@
     <div class="col-sm-1 sidenav"></div>
     <div class="col-sm-9 pagination_col">
       <ul class="pagination">
-        <?php
-        if($page == 0)
-          echo '<li class="disabled"><a href="index.php?page=' . $page . '">' . '<' . '</a></li>';
-        else
-          echo '<li><a href="index.php?page=' . ($page-1) . '">' . '<' . '</a></li>';
-        echo '<li class="active"><a href="index.php?page=' . $page . '">' . $page . '</a></li>';
-        echo '<li><a href="index.php?page=' . ($page+1) . '">' . '>' . '</a></li>';
-        ?>
+        <li class="disabled"><a href=""><</a></li>
+        <li class="active"><a href="index.php">1</a></li>
+        <li><a href="index.php?page=2">2</a></li>
+        <li><a href="index.php?page=3">3</a></li>
+        <li><a href="index.php?page=2">></a></li>
       </ul>
     </div>
     <div class="col-sm-2 sidenav"></div>

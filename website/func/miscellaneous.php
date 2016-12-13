@@ -12,7 +12,7 @@ function validateDate($date, $format = 'Y-m-d H:i:s')
 
 function showCategorieList()
 {
-  include("func/connection.php"); 
+  include("func/connection.php");
   $q = $conn->prepare("SELECT * FROM Categories");
   $r = $q->execute();
 
