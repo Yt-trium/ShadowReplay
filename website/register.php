@@ -37,8 +37,9 @@
     </ul>
     <!-- navbar login -->
     <ul class="nav navbar-nav navbar-right">
-      <li class="active"><a href="register.php"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-      <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+    <?php
+      showUserSection();
+    ?>
     </ul>
   </div>
 </nav>
@@ -155,22 +156,22 @@
         echo $return;
       ?>
       <form class="form-horizontal" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-          <input type="text" class="form-control" id="username" name="username"
+          <input type="text" class="form-control" id="username" name="username" value="<?php echo $username ?>"
           placeholder="Nom d'utilisateur"></br>
-          <input type="password" class="form-control" id="password" name="password"
+          <input type="password" class="form-control" id="password" name="password" value="<?php echo $password ?>"
           placeholder="Mot de passe"></br>
 
-          <input type="email" class="form-control" id="email" name="email"
+          <input type="email" class="form-control" id="email" name="email" value="<?php echo $email ?>"
           placeholder="Email"></br>
 
-          <input type="text" class="form-control" id="lastname" name="lastname"
+          <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $lastname ?>"
           placeholder="Nom"></br>
-          <input type="text" class="form-control" id="firstname" name="firstname"
+          <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $firstname ?>"
           placeholder="Prénom"></br>
 
           <label for="birthday" align="left">Date de naissance:</label>
-          <input type="date" class="form-control" id="birthday" name="birthday"
-          placeholder="Date de naissance"></br>
+          <input type="date" class="form-control" id="birthday" name="birthday" value="<?php echo $birthday ?>"
+          placeholder="Date de naissance (format aaaa-mm-dd exemple 1995-02-24)"></br>
 
           <select class="form-control" id="nationality" name="nationality">
             <option value="">Nationalité</option>

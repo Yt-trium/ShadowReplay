@@ -37,8 +37,9 @@
     </ul>
     <!-- navbar login -->
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-      <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+    <?php
+      showUserSection();
+    ?>
     </ul>
   </div>
 </nav>

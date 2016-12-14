@@ -22,4 +22,19 @@ function showCategorieList()
   }
 }
 
+function showUserSection()
+{
+  session_start();
+  if (isset($_SESSION['id']) AND isset($_SESSION['login']))
+  {
+    echo '<li><a href="account.php"><span class="glyphicon glyphicon-user"></span> ' . $_SESSION['login'] .'</a></li>';
+    echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Deconnexion</a></li>';
+  }
+  else
+  {
+    echo '<li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>';
+    echo '<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
+  }
+}
+
 ?>

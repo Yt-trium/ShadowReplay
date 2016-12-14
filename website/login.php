@@ -1,3 +1,34 @@
+
+<?php
+$return = "";
+  if($_SERVER["REQUEST_METHOD"] == "POST")
+  {
+    // Include database connection.
+    include("func/connection.php");
+    $username = $password = "";
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $q = $conn->prepare('SELECT idUser FROM Users WHERE login = :login AND password = :password');
+    $q->bindParam(':login',$username);
+    $q->bindParam(':password',$password);
+
+    $q->execute();
+    $r = $q->fetch();
+
+    if (!$r)
+    {
+      $return = "<h1  style='color:#ff0000'>- Erreur lors de la connexion -</h1></br>";
+    }
+    else
+    {
+      session_start();
+      $_SESSION['id'] = $r['idUser'];
+      $_SESSION['login'] = $username;
+      $return = "<h1  style='color:#009933'>- Vous êtes connecté -</h1></br>";
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -37,8 +68,9 @@
     </ul>
     <!-- navbar login -->
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-      <li class="active"><a href="signin.php"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+    <?php
+      showUserSection();
+    ?>
     </ul>
   </div>
 </nav>
@@ -48,14 +80,17 @@
   <div class="row main">
     <div class="col-sm-1 sidenav"></div>
     <div class="col-sm-9 vidcol">
-    <form>
+      <?php
+        echo $return;
+      ?>
+    <form class="form-horizontal" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
       <div class="form-group">
         <label for="username">Nom d'utilisateur:</label>
-        <input type="text" class="form-control" id="username">
+        <input type="text" class="form-control" id="username" name="username">
       </div>
       <div class="form-group">
         <label for="password">Mot de passe:</label>
-        <input type="password" class="form-control" id="password">
+        <input type="password" class="form-control" id="password" name="password">
       </div>
       <div class="checkbox">
         <label><input type="checkbox"> Se rappeler de moi</label>
