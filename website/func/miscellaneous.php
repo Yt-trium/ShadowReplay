@@ -27,6 +27,8 @@ function showUserSection()
   session_start();
   if (isset($_SESSION['id']) AND isset($_SESSION['login']))
   {
+    echo '<li><a href="subscribe.php"><span class="glyphicon glyphicon-star"></span> Abonnement</a></li>';
+    echo '<li><a href="recommendation.php"><span class="glyphicon glyphicon-film"></span> Recommendation </a></li>';
     echo '<li><a href="account.php"><span class="glyphicon glyphicon-user"></span> ' . $_SESSION['login'] .'</a></li>';
     echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Deconnexion</a></li>';
   }
