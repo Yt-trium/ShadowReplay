@@ -64,6 +64,9 @@
        <source src="vid/<?php echo $id ?>.mp4" type="video/mp4">
      Your browser does not support the video tag.
      </video>
+     <?php
+      showVideoLikeSusbscribe($id);
+     ?>
     </div>
     <div class="col-sm-2 sidenav">
       <div class="well">

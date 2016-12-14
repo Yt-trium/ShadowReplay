@@ -113,6 +113,7 @@
         {
           $newsletter = 0;
         }
+        $password_hash = sha1($password);
 
         $q = $conn->prepare("SELECT max(idUser) FROM Users");
         $r = false;
@@ -125,7 +126,7 @@
 
         $q->bindParam(':id',$id);
         $q->bindParam(':username',$username);
-        $q->bindParam(':password',$password);
+        $q->bindParam(':password',$password_hash);
         $q->bindParam(':lastname',$lastname);
         $q->bindParam(':firstname',$firstname);
         $q->bindParam(':birthday',$birthday);

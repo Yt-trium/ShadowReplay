@@ -37,4 +37,24 @@ function showUserSection()
   }
 }
 
+function showVideoLikeSusbscribe($idVideo)
+{
+  include("func/connection.php");
+  session_start();
+
+  $idEmission = 0;
+  $querry = 'SELECT idEmission FROM Episodes WHERE idEpisode = '.$idVideo;
+  $q = $conn->prepare($querry);
+  $q->execute();
+  $row = $q->fetch();
+  $idEmission = $row[0];
+
+  if (isset($_SESSION['id']) AND isset($_SESSION['login']))
+  {
+    echo '<a href="preference.php?id='.$idEmission.'&a=1" type="button" class="btn btn-success">S\'abonner à l\'émission</a>';
+    echo '     ';
+    echo '<a href="preference.php?id='.$idVideo.'&a=3" type="button" class="btn btn-primary">Ajouter la vidéo en favoris</a>';
+  }
+}
+
 ?>

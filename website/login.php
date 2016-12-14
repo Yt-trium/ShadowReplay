@@ -8,6 +8,7 @@ $return = "";
     $username = $password = "";
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $password = sha1($password);
     $q = $conn->prepare('SELECT idUser FROM Users WHERE login = :login AND password = :password');
     $q->bindParam(':login',$username);
     $q->bindParam(':password',$password);
