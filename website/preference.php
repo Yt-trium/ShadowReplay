@@ -22,7 +22,10 @@ if (isset($_SESSION['id']) AND isset($_SESSION['login']))
     else if($action == 2)
     {
       // Supprimer abonnement
-
+      $querry = "DELETE FROM Subscribe WHERE Subscribe.idUser = :idUser AND Subscribe.idEmission = :idContent";
+      $q = $conn->prepare($querry);
+      $q->bindParam(':idUser',$idUser);
+      $q->bindParam(':idContent',$idContent);
     }
     else if($action == 3)
     {
@@ -35,6 +38,10 @@ if (isset($_SESSION['id']) AND isset($_SESSION['login']))
     else if($action == 4)
     {
       // Supprimer favoris
+      $querry = "DELETE FROM Favorite WHERE Favorite.idUser = :idUser AND Favorite.idEpisode = :idContent";
+      $q = $conn->prepare($querry);
+      $q->bindParam(':idUser',$idUser);
+      $q->bindParam(':idContent',$idContent);
 
     }
 

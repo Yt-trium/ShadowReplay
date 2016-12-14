@@ -51,10 +51,45 @@ function showVideoLikeSusbscribe($idVideo)
 
   if (isset($_SESSION['id']) AND isset($_SESSION['login']))
   {
-    echo '<a href="preference.php?id='.$idEmission.'&a=1" type="button" class="btn btn-success">S\'abonner à l\'émission</a>';
+    if(!isXSubOfY($_SESSION['id'],$idEmission))
+      echo '<a href="preference.php?id='.$idEmission.'&a=1" type="button" class="btn btn-success">S\'abonner à l\'émission</a>';
+    else
+      echo '<a href="preference.php?id='.$idEmission.'&a=2" type="button" class="btn btn-warning">Se désabonner de l\'émission</a>';
+
     echo '     ';
-    echo '<a href="preference.php?id='.$idVideo.'&a=3" type="button" class="btn btn-primary">Ajouter la vidéo en favoris</a>';
+
+
+    if(!isXFanOfY($_SESSION['id'],$idVideo))
+      echo '<a href="preference.php?id='.$idVideo.'&a=3" type="button" class="btn btn-primary">Ajouter la vidéo aux favoris</a>';
+    else
+      echo '<a href="preference.php?id='.$idVideo.'&a=4" type="button" class="btn btn-danger">Supprimé la vidéo des favoris</a>';
   }
+}
+
+function isXSubOfY($idUser, $idEmission)
+{
+  include("func/connection.php");
+  $querry = "SELECT * FROM Subscribe WHERE idUser = ".$idUser." AND idEmission = ".$idEmission;
+  $q = $conn->prepare($querry);
+  $q->execute();
+
+  if($q->rowCount() > 0)
+    return true;
+  else
+    return false;
+}
+
+function isXFanOfY($idUser, $idVideo)
+{
+  include("func/connection.php");
+  $querry = "SELECT * FROM Favorite WHERE idUser = ".$idUser." AND idEpisode = ".$idVideo;
+  $q = $conn->prepare($querry);
+  $q->execute();
+
+  if($q->rowCount() > 0)
+    return true;
+  else
+    return false;
 }
 
 ?>
