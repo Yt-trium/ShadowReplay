@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <title>Shadow Replay - Accueil</title>
+  <title>Shadow Replay - Visionnage</title>
   <meta charset="utf-8">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,21 +72,6 @@
         <img class="img-responsive center-block" src="img/ads/halter.png" alt="ads h">
       </div>
     </div>
-  </div>
-
-  <!-- pagination row -->
-  <div class="row pagination_row">
-    <div class="col-sm-1 sidenav"></div>
-    <div class="col-sm-9 pagination_col">
-      <ul class="pagination">
-        <li class="disabled"><a href=""><</a></li>
-        <li class="active"><a href="index.php">1</a></li>
-        <li><a href="index.php?page=2">2</a></li>
-        <li><a href="index.php?page=3">3</a></li>
-        <li><a href="index.php?page=2">></a></li>
-      </ul>
-    </div>
-    <div class="col-sm-2 sidenav"></div>
   </div>
 
 </div>

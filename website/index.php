@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <title>Shadow Replay - Accueil</title>
+  <title>Shadow Replay - Navigation</title>
   <meta charset="utf-8">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,19 +46,30 @@
 <?php
   // Gestion du numéro de page
   $page = 0;
+  $categ = 0;
 
   if($_SERVER["REQUEST_METHOD"] == "GET")
   {
     $page = $_GET['page'];
+    $categ = $_GET['categorie'];
   }
 
   if($page == "")
     $page = 0;
+  if($categ == "")
+    $categ = 0;
 ?>
 
 <?php
   include("func/connection.php");
-  $q = $conn->prepare("SELECT idEpisode, title FROM Episodes WHERE idEpisode > ". 15*$page." LIMIT 15");
+  if($categ == 0)
+    $query = ("SELECT idEpisode, title FROM Episodes WHERE idEpisode > ". 15*$page." LIMIT 15");
+  else
+    $query = (" SELECT idEpisode, title FROM Episodes
+                INNER JOIN Emissions ON Emissions.idEmission = Episodes.idEmission
+                WHERE Emissions.idCategory = " . $categ . " AND idEpisode > ". 15*$page." LIMIT 15;");
+
+  $q = $conn->prepare($query);
   $r = false;
   $r = $q->execute();
 
@@ -135,11 +146,12 @@
       <ul class="pagination">
         <?php
         if($page == 0)
-          echo '<li class="disabled"><a href="index.php?page=' . $page . '">' . '<' . '</a></li>';
+          echo '<li class="disabled"><a href="index.php?page=' . $page . '&categorie=' . $categ . '">' . '<' . '</a></li>';
         else
-          echo '<li><a href="index.php?page=' . ($page-1) . '">' . '<' . '</a></li>';
+          echo '<li><a href="index.php?page=' . ($page-1) . '&categorie=' . $categ . '">' . '<' . '</a></li>';
+
         echo '<li class="active"><a href="index.php?page=' . $page . '">' . $page . '</a></li>';
-        echo '<li><a href="index.php?page=' . ($page+1) . '">' . '>' . '</a></li>';
+        echo '<li><a href="index.php?page=' . ($page+1) . '&categorie=' . $categ . '">' . '>' . '</a></li>';
         ?>
       </ul>
     </div>
