@@ -4,7 +4,7 @@
 			<h1 >- ADD OR DELETE USERS -</h1></br>
 			</br>
 			<h3 >Add users :</h3></br>
-			<form class="form-inline" >
+			<form class="form-inline" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 			  <div class="form-group">
 				<label for="login">Login:</label>
 				<input type="text" class="form-control" id="login" name="login">
