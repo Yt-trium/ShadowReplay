@@ -21,7 +21,7 @@
       <a class="navbar-brand" href="index.php">ShadowReplay</a>
     </div>
     <!-- navbar menu -->
-    <ul class="nav navbar-nav">4
+    <ul class="nav navbar-nav">
       <li><a href="index.php"><span class="glyphicon glyphicon-home"></span> Accueil</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
