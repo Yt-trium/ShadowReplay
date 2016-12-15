@@ -1,0 +1,40 @@
+/* navbar : no margin, no rounded border */
+.navbar
+{
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+/* Set minimum height */
+.row.main
+{
+  height: 1200px;
+}
+
+/* sidenav : color, pading */
+.sidenav
+{
+  padding-top: 20px;
+  background-color: #f1f1f1;
+  /* background-color: #000000;*/
+  height: 100%;
+}
+
+.vidcol
+{
+  padding-top: 20px;
+}
+
+/* Set minimum height */
+.row.pagination_row
+{
+  height: 100px;
+}
+
+/* footer : color */
+footer
+{
+  background-color: #555;
+  color: white;
+  padding: 10px;
+}
