@@ -238,9 +238,9 @@
 			</br>
 			<span>Data in the table: </span>
 			<br/>
-			
+
 			<?php printUserTable(); ?>
-			
+
 		</div>
 	</div>
 </div>

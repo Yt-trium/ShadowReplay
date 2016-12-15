@@ -1,5 +1,7 @@
 <?php
 $db_servername = "localhost";
+$db_username   = "adem_replay";
+$db_password   = "adem_r3pl4y";
 
 try
 {
