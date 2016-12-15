@@ -17,7 +17,7 @@
 
 		if (!$resultat)
 		{
-			echo '<h1  style=\'color:#009933\'>- Username or password incorrect -</h1></br>' ;
+			echo '<h1  style=\'color:#FF0000\'>- Username or password incorrect -</h1></br>' ;
 		}
 		else
 		{

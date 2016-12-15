@@ -35,7 +35,7 @@ function addDataTable()
 			$birthday = $_POST['birthday'];
 			$nationality=  $_POST['nationality'];
 			$newsletter =  $_POST['newsletter'];
-
+			
 			if(strlen($username) > 64 || $username == "")
 			{
 				$return = $error_str;
